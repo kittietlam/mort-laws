@@ -10,7 +10,7 @@ form.addEventListener('submit', (e) => {
   let b = bField.value.trim();
   let c = cField.value.trim();
   if (validate(x, b, c)) {
-    updateChart(chart, b, c);
+    updateChart(chart, parseFloat(x), parseFloat(b), parseFloat(c));
   }
 });
 
@@ -26,12 +26,15 @@ function loadChart() {
     options: {
       maintainAspectRatio: false,
       legend: false,
-      title: { display: true, text: 'Survival Function: Gompertz\'s Law', fontSize: 14 },
+      title: { display: true, text: '', fontSize: 14 },
       hover: { animationDuration: 0 },
       scales: {
         xAxes: [{
           scaleLabel: { display: true, labelString: 'time (t)', fontStyle: 'italic' },
-          ticks: { maxRotation: 0, autoSkipPadding: 9, padding: 5 },
+          ticks: {
+            maxRotation: 0, autoSkipPadding: 9, padding: 5,
+            callback: function(n) { if (Number.isInteger(n)) return n; }
+          },
           gridLines: { display: false }
         }],
         yAxes: [{
@@ -80,8 +83,8 @@ function validate(x, b, c) {
 }
 
 // update data points in chart - takes chart object as input
-function updateChart(chart, b, c){
-  let points = gompertz(b, c);
+function updateChart(chart, x, b, c){
+  let points = gompertz(x, b, c);
   let labels = points.xs; // X DATA
   let dataset = {
     data: points.ys, // Y DATA
@@ -96,21 +99,43 @@ function updateChart(chart, b, c){
   chart.update();
 }
 
-//data point calculation
-function gompertz(b, c) {
+// Gompertz calculation
+function gompertz(currAge, b, c) {
   const xs = [];
   const ys = [];
-  let cutoff = 0;
-  let i = 1;
-  while (i > 0.001) {
-    cutoff+= 5;
-    i = Math.exp(-b * (c ** cutoff - 1) / Math.log(c));
-  }
-
-  for (let x = 0; x <= cutoff; x++) {
-    let y = Math.exp(-b * (c ** x - 1) / Math.log(c));
-    xs.push(x);
+  let t = 0;
+  let y;
+  let cutoff = 5;
+  let d = cGompertz(currAge, b, c);
+  while (t <= cutoff) {
+    if (d === 0) {
+      if (t === 0) y = 1;
+      else y = 0;
+    } else {
+      y = cGompertz(currAge + t, b, c) / d;
+    }
+    xs.push(t);
     ys.push(y);
+    t += 0.5;
+    if (t === cutoff && y > 0.001) cutoff += 5;
+  }
+  return {xs, ys};
+}
+
+function cGompertz(x, b, c) {
+  return Math.exp(-b * (c ** x - 1) / Math.log(c));
+}
+
+// De Moivre calculation currAge < limit
+function deMoivre(currAge, limit) {
+  const xs = [];
+  const ys = [];
+  let t = 0;
+  while (currAge + t <= limit) {
+    let y = (limit - currAge - t) / (limit - currAge);
+    xs.push(t);
+    ys.push(y);
+    t++;
   }
   return {xs, ys};
 }
