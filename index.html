@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <title>Survival Distributions</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <h1>Survival Distribution: Gompertz's Law</h1>
+
+    <!-- FOR USER TO ENTER PARAMETERS -->
+    <form class="form" id="form">
+      <div class="form__item">
+        <label class="form__label" for="x">Current Age (x):  </label>
+        <input class="form__input" id="x" name="x" type="text" placeholder="x ≥ 0">
+      </div>
+      <div class="form__param">
+        <div class="form__item">
+          <label class="form__label" for="b">B: </label>
+          <input class="form__input" id="b" name="b" type="text" placeholder="B > 0">
+        </div>
+        <div class="form__item">
+          <label class="form__label" for="c">c: </label>
+          <input class="form__input" id="c" name="c" type="text" placeholder="c > 1">
+        </div>
+        <button class="form__btn" class="form__item" type="submit">Graph</button>
+      </div>
+    </form>
+
+    <!-- CHART GOES HERE -->
+    <div style="width: 90%" min-width="300">
+      <canvas id="chart" height="350"></canvas>
+    </div>
+
+  </body>
+</html>
