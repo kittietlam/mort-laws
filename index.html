@@ -13,14 +13,18 @@
   </head>
 
   <body>
-    <nav class="navbar text-dark sticky-top bg-transparent p-0">
-      <span class="navbar-brand px-3 pb-0 h1">Life Contingencies Graphs</span>
+    <!-- top bar -->
+    <nav class="navbar navbar-expand-md stick-top navbar-dark bg-dark">
+      <span class="navbar-brand">Life Contingencies Graphs</span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
     </nav>
 
     <div class="container-fluid">
       <!-- sidebar -->
       <div class="row">
-        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse vh-100"> <!-- full height -->
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
           <div class="sidebar-sticky pt-3">
             <ul class="nav flex-column">
               <li class="nav-item">
@@ -39,9 +43,7 @@
           </div>
         </nav>
 
-        <main role="main" class="col-md-9 col-lg-10 ml-sm-auto px-4">
-          <h3>add space here</h3>
-
+        <main role="main" class="col-md-9 col-lg-10 p-4">
           <!-- user input -->
           <ul class="nav nav-tabs">
             <li class="nav-item"> <!-- this wrapper is necessary -->
@@ -61,15 +63,15 @@
             </li>
           </ul>
 
-          <div class="tab-content">
+          <div class="tab-content p-2">
             <div class="tab-pane active" id="tab1">
               <form id="form1"> <!-- DE MOIVRE -->
-                <label for="x1">Current Age (x): </label>
+                <label for="x1">Current Age (x):</label>
                 <input id="x1" class="x" type="text" placeholder="x ≥ 0">
+
                 <label for="lim">Limiting Age (ω):</label>
                 <input id="lim" type="text" placeholder="0 ≤ x < ω">
-
-                <button type="submit">Graph</button>
+                <button type="submit" class="btn btn-primary">Graph</button>
               </form>
             </div>
             <div class="tab-pane" id="tab2">
@@ -82,7 +84,7 @@
                 <label for="c2">c: </label>
                 <input id="c2" type="text" placeholder="c > 1">
 
-                <button type="submit">Graph</button>
+                <button type="submit" class="btn btn-primary">Graph</button>
               </form>
             </div>
             <div class="tab-pane" id="tab3">
@@ -98,7 +100,7 @@
                 <label for="c3">c: </label>
                 <input id="c3" type="text" placeholder="c > 1">
 
-                <button type="submit">Graph</button>
+                <button type="submit" class="btn btn-primary">Graph</button>
               </form>
             </div>
             <div class="tab-pane" id="tab4">
@@ -111,7 +113,7 @@
                 <label for="n4">n: </label>
                 <input id="n4" type="text" placeholder="n > -1">
 
-                <button type="submit">Graph</button>
+                <button type="submit" class="btn btn-primary">Graph</button>
               </form>
             </div>
             <div class="tab-pane" id="tab5">
@@ -121,7 +123,7 @@
                 <label for="mu5">mu: </label>
                 <input id="mu5" type="text" placeholder="μ ≥ 0">
 
-                <button type="submit">Graph</button>
+                <button type="submit" class="btn btn-primary">Graph</button>
               </form>
             </div>
           </div>
