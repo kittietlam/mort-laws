@@ -1,4 +1,4 @@
-/ this file contains javascript for loading the chart and forms
+// this file contains javascript for loading the chart and forms
 let chart = loadChart();
 const forms = document.querySelectorAll('form');
 const INCREMENT = 0.5;
