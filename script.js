@@ -1,7 +1,4 @@
-// this file contains javascript for loading the chart and forms
-/* TODO: (1) figure out what to do when cutoff is longer than needed (2) one input for x's (3) finish other laws */
-// push y data, then check if x labels are enough. if not, increase them
-// count num data points in each y set, if too many x's cut them
+/ this file contains javascript for loading the chart and forms
 let chart = loadChart();
 const forms = document.querySelectorAll('form');
 const INCREMENT = 0.5;
