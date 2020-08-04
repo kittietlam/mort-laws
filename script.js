@@ -4,6 +4,7 @@ const forms = document.querySelectorAll('form');
 const INCREMENT = 0.5;
 
 forms.forEach(form => {
+  form.autocomplete = 'off';
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     let inputs = form.querySelectorAll('input');
