@@ -9,23 +9,36 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <title>Life Contingencies Graphs</title>
   </head>
 
   <body>
-    <!-- top bar -->
-    <nav class="navbar navbar-expand-md stick-top navbar-dark bg-dark">
+    <style>
+      canvas {
+        max-width: 800px;
+      }
+      .tab-pane > .row {
+        max-width: 850px;
+      }
+    </style>
+
+    <!-- header -->
+    <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
       <span class="navbar-brand">Life Contingencies Graphs</span>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
     </nav>
 
+    <!-- everything below the header -->
     <div class="container-fluid">
-      <!-- sidebar -->
       <div class="row">
+        <!-- sidebar -->
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-          <div class="sidebar-sticky pt-3">
+          <div class="sidebar-sticky pt-3 vh-100"> <!-- extra div is to add padding -->
             <ul class="nav flex-column">
               <li class="nav-item">
                 <a class="nav-link" href="">Survival Function</a>
@@ -43,99 +56,123 @@
           </div>
         </nav>
 
-        <main role="main" class="col-md-9 col-lg-10 p-4">
-          <!-- user input -->
-          <ul class="nav nav-tabs">
-            <li class="nav-item"> <!-- this wrapper is necessary -->
-              <a class="nav-link active" href="#tab1" data-toggle="tab">De Moivre's Law</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#tab2" data-toggle="tab">Gompertz's Law</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#tab3" data-toggle="tab">Makeham's Law</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#tab4" data-toggle="tab">Weibull Distribution</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#tab5" data-toggle="tab">Constant Force</a>
-            </li>
-          </ul>
+        <!-- main content -->
+        <div class="col-md-9 col-lg-10">
+          <!-- nav tabs -->
+          <div class="row p-4">
+            <ul class="nav nav-tabs">
+              <li class="nav-item"> <!-- this wrapper is necessary -->
+                <a class="nav-link active" href="#tab1" data-toggle="tab">De Moivre's Law</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#tab2" data-toggle="tab">Gompertz's Law</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#tab3" data-toggle="tab">Makeham's Law</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#tab4" data-toggle="tab">Weibull Distribution</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#tab5" data-toggle="tab">Constant Force</a>
+              </li>
+            </ul>
+          </div>
 
-          <div class="tab-content p-2">
-            <div class="tab-pane active" id="tab1">
-              <form id="form1"> <!-- DE MOIVRE -->
-                <label for="x1">Current Age (x):</label>
-                <input id="x1" class="x" type="text" placeholder="x ≥ 0">
-                
-                <div class="form-group row">
-                  <label for="lim" class="col-2">Limiting Age (ω):</label>
-                  <input id="lim" class="col" type="text" placeholder="0 ≤ x < ω">
+          <!-- tab panes -->
+          <div class="tab-content row">
+            <div class="tab-pane col active" id="tab1"> <!-- DE MOIVRE -->
+              <div class="row">
+                <div class="col-sm-6 h6 my-auto">
+                  <span>$$S_0(x) = 1 - \frac{x}{\omega}$$</span>
+                  <span>$$_tp_x = 1 - \frac{\omega - x - t}{\omega - x}$$</span>
                 </div>
-                <button type="submit" class="btn btn-primary">Graph</button>
-              </form>
+                <form class="col-sm-6" id="form1">
+                    <label for="x1" class="col-form-label col-form-label-sm">Current Age\(~x\) :</label>
+                    <input id="x1" class="x form-control form-control-sm" type="text" placeholder="x ≥ 0">
+                    <label for="lim" class="col-form-label col-form-label-sm">Limiting Age\(~\omega\) :</label>
+                    <input id="lim" class="form-control form-control-sm" type="text" placeholder="0 ≤ x < ω">
+                    <button type="submit" class="my-3 btn btn-outline-dark btn-sm">Graph</button>
+                </form>
+              </div>
             </div>
-            <div class="tab-pane" id="tab2">
-              <form id="form2"> <!-- GOMPERTZ -->
-                <label for="x2">Current Age (x): </label>
-                <input id="x2" class="x" type="text" placeholder="x ≥ 0">
-                <label for="b2">B: </label>
-                <input id="b2" type="text" placeholder="B > 0">
 
-                <label for="c2">c: </label>
-                <input id="c2" type="text" placeholder="c > 1">
-
-                <button type="submit" class="btn btn-primary">Graph</button>
-              </form>
+            <div class="tab-pane col" id="tab2"> <!-- GOMPERTZ -->
+              <div class="row">
+                <div class="col-sm-5 h6 my-auto">
+                  <span>$$S_0(x) = \exp(-\frac{B}{\ln c}(c^x - 1))$$</span>
+                  <span>$$_tp_x = \exp(-\frac{B}{\ln c}c^x(c^t - 1))$$</span>
+                </div>
+                <form class="col-sm-6" id="form2">
+                    <label for="x2" class="col-form-label col-form-label-sm">Current Age\(~x\) :</label>
+                    <input id="x2" class="x form-control form-control-sm" type="text" placeholder="x ≥ 0">
+                    <label for="b2" class="col-form-label col-form-label-sm">\(B\) :</label>
+                    <input id="b2" class="form-control form-control-sm" type="text" placeholder="B > 0">
+                    <label for="c2" class="col-form-label col-form-label-sm">\(c\) :</label>
+                    <input id="c2" class="form-control form-control-sm" type="text" placeholder="c > 1">
+                    <button type="submit" class="my-3 btn btn-outline-dark btn-sm">Graph</button>
+                </form>
+              </div>
             </div>
-            <div class="tab-pane" id="tab3">
-              <form id="form3"> <!-- MAKEHAM -->
-                <label for="x3">Current Age (x): </label>
-                <input id="x3" class="x" type="text" placeholder="x ≥ 0">
-                <label for="a3">A: </label>
-                <input id="a3" type="text" placeholder="A ≥ -B">
 
-                <label for="b3">B: </label>
-                <input id="b3" type="text" placeholder="B > 0">
-
-                <label for="c3">c: </label>
-                <input id="c3" type="text" placeholder="c > 1">
-
-                <button type="submit" class="btn btn-primary">Graph</button>
-              </form>
+            <div class="tab-pane col" id="tab3"> <!-- MAKEHAM -->
+              <div class="row">
+                <div class="col-sm-6 h6 my-auto">
+                  <span>$$S_0(x) = \exp(-Ax-\frac{B}{\ln c}(c^x - 1))$$</span>
+                  <span>$$_tp_x = \exp(-Ax-\frac{B}{\ln c}c^x(c^t - 1))$$</span>
+                </div>
+                <form class="col-sm-5" id="form3">
+                    <label for="x3" class="col-form-label col-form-label-sm">Current Age\(~x\) :</label>
+                    <input id="x3" class="x form-control form-control-sm" type="text" placeholder="x ≥ 0">
+                    <label for="a3" class="col-form-label col-form-label-sm">\(A\) :</label>
+                    <input id="a3" class="form-control form-control-sm" type="text" placeholder="A ≥ -B">
+                    <label for="b3" class="col-form-label col-form-label-sm">\(B\) :</label>
+                    <input id="b3" class="form-control form-control-sm" type="text" placeholder="B > 0">
+                    <label for="c3" class="col-form-label col-form-label-sm">\(c\) :</label>
+                    <input id="c3" class="form-control form-control-sm" type="text" placeholder="c > 1">
+                    <button type="submit" class="my-3 btn btn-outline-dark btn-sm">Graph</button>
+                </form>
+              </div>
             </div>
-            <div class="tab-pane" id="tab4">
-              <form id="form4"> <!-- WEIBULL -->
-                <label for="x4">Current Age (x): </label>
-                <input id="x4" class="x" type="text" placeholder="x ≥ 0">
-                <label for="k4">k: </label>
-                <input id="k4" type="text" placeholder="k > 0">
 
-                <label for="n4">n: </label>
-                <input id="n4" type="text" placeholder="n > -1">
-
-                <button type="submit" class="btn btn-primary">Graph</button>
-              </form>
+            <div class="tab-pane col" id="tab4"> <!-- WEIBULL -->
+              <div class="row">
+                <div class="col-sm-5 h6 my-auto">
+                  <span>$$S_0(x) = \exp(-\frac{k}{n+1}x^{n+1})$$</span>
+                  <span>$$\mu _x = kx^n$$</span>
+                </div>
+                <form class="col-sm-6" id="form4">
+                    <label for="x4" class="col-form-label col-form-label-sm">Current Age\(~x\) :</label>
+                    <input id="x4" class="x form-control form-control-sm" type="text" placeholder="x ≥ 0">
+                    <label for="k4" class="col-form-label col-form-label-sm">\(k\) :</label>
+                    <input id="k4" class="form-control form-control-sm" type="text" placeholder="k > 0">
+                    <label for="n4" class="col-form-label col-form-label-sm">\(n\) :</label>
+                    <input id="n4" class="form-control form-control-sm" type="text" placeholder="n > -1">
+                    <button type="submit" class="my-3 btn btn-outline-dark btn-sm">Graph</button>
+                </form>
+              </div>
             </div>
-            <div class="tab-pane" id="tab5">
-              <form id="form5"> <!-- CONST FORCE -->
-                <label for="x4">Current Age (x): </label>
-                <input id="x4" class="x" type="text" placeholder="x ≥ 0">
-                <label for="mu5">mu: </label>
-                <input id="mu5" type="text" placeholder="μ ≥ 0">
 
-                <button type="submit" class="btn btn-primary">Graph</button>
-              </form>
+            <div class="tab-pane col" id="tab5"> <!-- CONST FORCE -->
+              <div class="row">
+                <div class="col-sm-5 h5 my-auto">$$S_0(x) = ~_tp_x = ~e^{-\mu x}$$</div>
+                <form class="col-sm-6" id="form5">
+                    <label for="x5" class="col-form-label col-form-label-sm">Current Age\(~x\) :</label>
+                    <input id="x5" class="x form-control form-control-sm" type="text" placeholder="x ≥ 0">
+                    <label for="mu5" class="col-form-label col-form-label-sm">\(\mu\) :</label>
+                    <input id="mu5" class="form-control form-control-sm" type="text" placeholder="μ ≥ 0">
+                    <button type="submit" class="my-3 btn btn-outline-dark btn-sm">Graph</button>
+                </form>
+              </div>
             </div>
           </div>
 
-          <!-- fix the scaling of chart -->
-          <div class="container">
+          <!-- chart -->
+          <div class="row p-5 mr-1">
             <canvas id="chart" height="350"></canvas>
           </div>
-        </main>
       </div>
+    </div>
     </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -151,3 +188,4 @@
     <script src="script.js"></script>
   </body>
 </html>
+
